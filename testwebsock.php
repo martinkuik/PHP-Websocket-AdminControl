@@ -5,12 +5,20 @@ require_once('./websockets.php');
 
 class echoServer extends WebSocketServer {
   //protected $maxBufferSize = 1048576; //1MB... overkill for an echo server, but potentially plausible for other applications.
-  
-  protected function process ($user, $message) {
-    $this->send($user,$message);
+  protected $user_list = array();
+
+	protected function process ($user, $message) {
+		foreach($this->user_list as $a) {
+			$this->send($a,$message);
+		}
   }
   
   protected function connected ($user) {
+		$this->user_list[] =	$user;
+		error_log("connected user: $user->id");
+		$cnt = count($this->user_list);
+		error_log("user  list count: $cnt");
+		
     // Do nothing: This is just an echo server, there's no need to track the user.
     // However, if we did care about the users, we would probably have a cookie to
     // parse at this step, would be looking them up in permanent storage, etc.
