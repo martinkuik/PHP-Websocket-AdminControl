@@ -25,6 +25,10 @@ class echoServer extends WebSocketServer {
   }
   
   protected function closed ($user) {
+		$idx = array_search($user, $this->user_list);
+		unset($this->user_list[$idx]);
+		$cnt = count($this->user_list);
+		error_log("user  list count: $cnt");
     // Do nothing: This is where cleanup would go, in case the user had any sort of
     // open files or other objects associated with them.  This runs after the socket 
     // has been closed, so there is no need to clean up the socket itself here.
