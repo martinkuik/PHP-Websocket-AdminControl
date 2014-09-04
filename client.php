@@ -1,18 +1,18 @@
 <?php
- function addr() {
-	 $a = $_SERVER['SERVER_ADDR'];
-	 if ($a == "::1") {
-		 $a = "localhost";
-	 }
-	 return $a;
- }
-	function title() {
-		$a = $_SERVER['SERVER_ADDR'];
-		if ($a == "::1"){
-			$a = "<b>Admin</b>";
-		}
-		return $a;
-	}
+function addr() {
+    $a = $_SERVER['SERVER_ADDR'];
+    if ($a == "::1") {
+        $a = "localhost";
+    }
+    return $a;
+}
+function title() {
+    $a = $_SERVER['SERVER_ADDR'];
+    if ($a == "::1") {
+        $a = "<b>Admin</b>";
+    }
+    return $a;
+}
 ?>
 <html>
 <head><title>Messenger API</title>
@@ -95,8 +95,8 @@ function onkey(event){ if(event.keyCode==13){ send(); } }
 <body onload="init()">
 	<h3>Your ip : 
 		<?php
-		error_reporting (E_STRICT);	
-	echo title();  ?>
+error_reporting(E_STRICT);
+echo title(); ?>
 	</h3>
 <div id="log"></div>
 <input id="msg" type="textbox" onkeypress="onkey(event)"/>
