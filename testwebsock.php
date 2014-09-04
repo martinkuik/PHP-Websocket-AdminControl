@@ -10,8 +10,11 @@ class echoServer extends WebSocketServer {
 	protected function process ($user, $message) {
 		foreach($this->user_list as $a) {
 			$this->send($a,$message);
+		
+		
 		}
-  }
+	error_log("message : $message");
+	}
   
   protected function connected ($user) {
 		$this->user_list[] =	$user;

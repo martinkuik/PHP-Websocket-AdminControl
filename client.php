@@ -6,8 +6,6 @@
 	 }
 	 return $a;
  }
-
-
 	function title() {
 		$a = $_SERVER['SERVER_ADDR'];
 		if ($a == "::1"){
@@ -16,12 +14,12 @@
 		return $a;
 	}
 ?>
-
 <html>
-<head><title>Chat API</title>
+<head><title>Messenger API</title>
 <style type="text/css">
 html,body {
-	font:normal 0.9em arial,helvetica;
+	font-family:verdana;
+	font-size:15px;
 }
 #log {
 	width:600px; 
@@ -38,7 +36,7 @@ var socket;
 var server_ip = "<?php echo addr(); ?>";
 
 function init() {
-	var host = "ws://" + server_ip + ":9000/echobot"; // SET THIS TO YOUR SERVER
+	var host = "ws://" + server_ip + ":9000/echobot"; 
 	try {
 		socket = new WebSocket(host);
 		log('WebSocket - status '+socket.readyState);
@@ -88,7 +86,6 @@ function reconnect() {
  	init();
 }
 
-// Utilities
 function $(id){ return document.getElementById(id); }
 function log(msg){ $("log").innerHTML+="<br>"+msg; }
 function onkey(event){ if(event.keyCode==13){ send(); } }
@@ -103,7 +100,8 @@ function onkey(event){ if(event.keyCode==13){ send(); } }
 	</h3>
 <div id="log"></div>
 <input id="msg" type="textbox" onkeypress="onkey(event)"/>
-<button onclick="send()">Send</button>
+<button onclick="send()">Send
+</button>
 <button onclick="quit()">Quit</button>
 <button onclick="reconnect()">Reconnect</button>
 </body>
