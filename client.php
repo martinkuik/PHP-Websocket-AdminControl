@@ -1,12 +1,37 @@
 <?php
-function addr() {
+/** Client 
+ *
+ * PHP version 5
+ *
+ * @category  PHP
+ * @package   Martin
+ * @author    Martin Kuik <martinn_@outlook.com>
+ * @copyright 2014 Martin Kuik
+ * @license   https://gnu.org/licenses/gpl.html GPL v3 License
+ * @link      https://github.com/martin.kuik
+ */
+
+/**
+ * Gets Server address 
+ *
+ * @return a string with the address.
+ */
+function addr() 
+{
     $a = $_SERVER['SERVER_ADDR'];
     if ($a == "::1") {
         $a = "localhost";
     }
     return $a;
 }
-function title() {
+
+/**
+ * Checks if your the localhost or an other user are
+ *
+ * @return the title. 
+ */
+function title() 
+{
     $a = $_SERVER['SERVER_ADDR'];
     if ($a == "::1") {
         $a = "<b>Admin</b>";

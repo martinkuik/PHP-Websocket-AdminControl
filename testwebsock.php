@@ -1,40 +1,85 @@
 #!/usr/bin/env php
 <?php
-require_once ('./websockets.php');
-class echoServer extends WebSocketServer {
-    //protected $maxBufferSize = 1048576; //1MB... overkill for an echo server, but potentially plausible for other applications.
+/** WebSocketRunner
+ *
+ * PHP version 5
+ *
+ * @category  PHP
+ * @package   Martin
+ * @author    Martin Kuik <martinn_@outlook.com>
+ * @copyright 2014 Martin Kuik
+ * @license   https://gnu.org/licenses/gpl.html GPL v3 License
+ * @link      https://github.com/martinkuik
+ */
+require_once '/websockets.php';
+/**
+ * Everyone opens the Websocket at this Chat Server
+ *
+ * @category  PHP
+ * @package   Martin
+ * @author    Martin Kuik <martinn_@outlook.com> 
+ * @copyright 2014 Martin Kuik
+ * @license   https://gnu.org/licenses/gpl.html GPL v3 License 
+ * @link      https://github.com/martinkuik 
+ */
+class EchoServer extends WebSocketServer
+{
+    /**
+     *  Array holding the active clients
+     */
     protected $user_list = array();
-    protected function process($user, $message) {
+    /**
+     *  Process is called every time a user sends a message to the server
+     *
+     * @param WebsocketUser $user    connection to a client  browser
+     * @param string        $message the user chat message
+     *
+     * @return void
+     */
+    protected function process($user, $message) 
+    {
         foreach ($this->user_list as $a) {
             $this->send($a, $message);
         }
         error_log("message : $message");
     }
-    protected function connected($user) {
+
+    /**
+     *  Process is called every time a user connect
+     *
+     * @param WebsocketUser $user connection to a client  browser
+     *
+     * @return void
+     */
+    protected function connected($user) 
+    {
         $this->user_list[] = $user;
         error_log("connected user: $user->id");
         $cnt = count($this->user_list);
         error_log("user  list count: $cnt");
-        // Do nothing: This is just an echo server, there's no need to track the user.
-        // However, if we did care about the users, we would probably have a cookie to
-        // parse at this step, would be looking them up in permanent storage, etc.
-        
     }
-    protected function closed($user) {
+
+    /**
+     *  Process is called every time a user disconnect 
+     *
+     * @param WebsocketUser $user connection to a client  browser
+     *
+     * @return void
+     */
+    protected function closed($user) 
+    {
         $idx = array_search($user, $this->user_list);
         unset($this->user_list[$idx]);
         $cnt = count($this->user_list);
         error_log("user  list count: $cnt");
-        // Do nothing: This is where cleanup would go, in case the user had any sort of
-        // open files or other objects associated with them.  This runs after the socket
-        // has been closed, so there is no need to clean up the socket itself here.
-        
     }
 }
-$echo = new echoServer("0.0.0.0", "9000");
-try {
+$echo = new EchoServer("0.0.0.0", "9000");
+try
+{
     $echo->run();
 }
-catch(Exception $e) {
+catch(Exception $e) 
+{
     $echo->stdout($e->getMessage());
 }
