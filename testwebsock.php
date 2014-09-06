@@ -11,7 +11,7 @@
  * @license   https://gnu.org/licenses/gpl.html GPL v3 License
  * @link      https://github.com/martinkuik
  */
-require_once '/websockets.php';
+require_once 'websockets.php';
 /**
  * Everyone opens the Websocket at this Chat Server
  *

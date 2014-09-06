@@ -10,7 +10,7 @@
  * @license   https://gnu.org/licenses/gpl.html GPL v3 License
  * @link      https://github.com/martin.kuik
  */
-require_once '/users.php';
+require_once ('users.php');
 /** The WebSocketServer
  *
  * PHP version 5
@@ -108,7 +108,7 @@ abstract class WebSocketServer
                     }
                     else
                     {
-                        $user = $this->getUserBySocket($socket);
+                        $user = $this->GetUserBySocket($socket);
                         if (!$user->handshake) 
                         {
                             $tmp = str_replace("\r", '', $buffer);
@@ -166,14 +166,14 @@ abstract class WebSocketServer
     }
     protected function connect($socket) 
     {
-        $user = new $this->userClass(uniqid('u'), $socket);
+        $user = new $this->WebSocketUser(uniqid('u'), $socket);
         $this->users[$user->id] = $user;
         $this->sockets[$user->id] = $socket;
         $this->connecting($user);
     }
     protected function disconnect($socket, $triggerClosed = true) 
     {
-        $disconnectedUser = $this->getUserBySocket($socket);
+        $disconnectedUser = $this-GetUserBySocket($socket);
         if ($disconnectedUser !== null) 
         {
             unset($this->users[$disconnectedUser->id]);
@@ -312,7 +312,7 @@ abstract class WebSocketServer
         return ""; // return either "Sec-WebSocket-Extensions: SelectedExtensions\r\n" or return an empty string.
         
     }
-    protected function getUserBySocket($socket) 
+    protected function GetUserBySocket($socket) 
     {
         foreach ($this->users as $user) 
         {
